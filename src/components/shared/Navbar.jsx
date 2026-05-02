@@ -3,6 +3,8 @@ import Link from "next/link";
 import React from "react";
 import avatar from "@/assets/user.png";
 import NavLink from "./NavLink";
+// import { CgProfile } from "react-icons/cg";
+import { FaRegUserCircle, FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   return (
@@ -20,7 +22,10 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="flex gap-2 justify-center items-center">
-        <Image src={avatar} alt="User Avatar" width={60} height={60} />
+        {/* <Image src={avatar} alt="User Avatar" width={60} height={60} /> */}
+        <span>
+          <FaRegUserCircle size={40} />
+        </span>
         <button className="btn bg-black text-white">
           <Link href={"/login"}>Login</Link>
         </button>
