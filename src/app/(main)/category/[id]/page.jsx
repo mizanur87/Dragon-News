@@ -1,7 +1,6 @@
 import LeftSideBar from "@/components/homepage/news/LeftSideBar";
 import RightSideBar from "@/components/homepage/news/RightSideBar";
-import { lightFormat } from "date-fns";
-// import Image from "next/image";
+import React from "react";
 
 async function getCategories() {
   const res = await fetch(
@@ -21,9 +20,13 @@ async function getNewsByCatID(category_id) {
   return data.data;
 }
 
-export default async function Home() {
+const NewsCategoryPage = async ({ params }) => {
+  const { id } = await params;
+  console.log(id, "paramsRes");
+
   const categories = await getCategories();
-  const news = await getNewsByCatID("03");
+  const news = await getNewsByCatID(id);
+
   return (
     <div className="grid grid-cols-12 gap-3 container mx-auto my-[30px]">
       <div className="col-span-3">
@@ -32,13 +35,17 @@ export default async function Home() {
       <div className="col-span-6 text-center p-5 text-white font-bold text-md bg-gray-500">
         All News
         <div className="space-y-4">
-          {news.map((n) => {
-            return (
-              <div key={n._id} className="p-3 rounded-sm border">
-                {n.title}
-              </div>
-            );
-          })}
+          {news.length > 0 ? (
+            news.map((n) => {
+              return (
+                <div key={n._id} className="p-3 rounded-sm border">
+                  {n.title}
+                </div>
+              );
+            })
+          ) : (
+            <h2>No News Found</h2>
+          )}
         </div>
       </div>
       <div className="col-span-3 ">
@@ -46,4 +53,6 @@ export default async function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default NewsCategoryPage;
